@@ -93,6 +93,20 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           )}
 
+          {/* Admin Panel Button */}
+          <button
+            onClick={() => handleNavClick('admin')}
+            className={`hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all border ${
+              currentView === 'admin'
+                ? 'bg-purple-600 text-white border-purple-600 shadow-sm'
+                : 'bg-purple-500/10 text-purple-600 hover:bg-purple-500/20 border-purple-500/30'
+            }`}
+            title="Skynora Super Admin Console"
+          >
+            <span className="material-symbols-outlined text-sm">shield_person</span>
+            <span>Admin</span>
+          </button>
+
           {/* B2B Partner Portal Quick Switch Badge */}
           <button
             onClick={() => handleNavClick(currentView === 'partner-portal' ? 'explore' : 'partner-portal')}
@@ -107,6 +121,20 @@ export const Header: React.FC<HeaderProps> = ({
               {currentView === 'partner-portal' ? 'person' : 'storefront'}
             </span>
             <span>{currentView === 'partner-portal' ? 'Traveler Mode' : 'B2B Partner'}</span>
+          </button>
+
+          {/* Login Portal Button */}
+          <button
+            onClick={() => handleNavClick('login-portal')}
+            className={`hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-xl border text-xs font-bold transition-colors cursor-pointer ${
+              currentView === 'login-portal'
+                ? 'bg-indigo-600 text-white border-indigo-600'
+                : 'border-[#c6c6ce] text-[#131b2e] hover:bg-[#f2f3ff]'
+            }`}
+            title="Unified Login Portal (Hotel, Flight, Admin, etc.)"
+          >
+            <span className="material-symbols-outlined text-sm text-[#4b41e1]">key</span>
+            <span>Logins</span>
           </button>
 
           {/* Currency Pill */}

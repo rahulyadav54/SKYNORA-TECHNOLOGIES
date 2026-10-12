@@ -19,6 +19,97 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
   const [dates, setDates] = useState('18 Nov - 22 Nov');
   const [guests, setGuests] = useState('2 Adults, 1 Room');
 
+  const [showDestDropdown, setShowDestDropdown] = useState(false);
+  const [showDateDropdown, setShowDateDropdown] = useState(false);
+  const [showGuestDropdown, setShowGuestDropdown] = useState(false);
+
+  const [adultsCount, setAdultsCount] = useState(2);
+  const [childrenCount, setChildrenCount] = useState(0);
+  const [roomsCount, setRoomsCount] = useState(1);
+
+  const destinationOptions: Record<SearchTab, { label: string; sub: string }[]> = {
+    hotels: [
+      { label: 'Goa, India (Candolim & Sinquerim)', sub: 'North Goa Beach Resorts & Villas' },
+      { label: 'Calangute & Baga Beach', sub: 'Vibrant nightlife & beach shacks' },
+      { label: 'Anjuna & Vagator', sub: 'Clifftop views & boutique stays' },
+      { label: 'Palolem & South Goa', sub: 'Serene white sand secluded beaches' },
+      { label: 'Mumbai, Maharashtra', sub: 'Colaba, Bandra & Sea-facing hotels' },
+      { label: 'Bengaluru, Karnataka', sub: 'UB City, Indiranagar & Tech corridor' },
+      { label: 'Jaipur, Rajasthan', sub: 'Heritage Palaces & Pink City Havelis' },
+    ],
+    buses: [
+      { label: 'Mumbai to Goa (Panjim / Mapusa)', sub: 'Overnight AC Sleeper • 12 hrs' },
+      { label: 'Pune to Goa (Panjim / Margao)', sub: 'Volvo Multi-Axle Semi-Sleeper' },
+      { label: 'Bengaluru to Goa (Mapusa / Candolim)', sub: 'Scania AC Sleeper Express' },
+      { label: 'Hyderabad to Goa', sub: 'Luxury AC Sleeper Coach' },
+    ],
+    flights: [
+      { label: 'BOM (Mumbai) ➔ GOI (Goa Dabolim)', sub: 'IndiGo / Air India • Direct 1h 10m' },
+      { label: 'DEL (Delhi) ➔ GOI (Goa Mopa / Dabolim)', sub: 'Vistara / Akasa Air • Direct 2h 30m' },
+      { label: 'BLR (Bengaluru) ➔ GOI (Goa)', sub: 'Air India Express • Direct 1h 05m' },
+      { label: 'MAA (Chennai) ➔ BOM (Mumbai)', sub: 'IndiGo • Direct 1h 45m' },
+    ],
+    trains: [
+      { label: 'CSMT (Mumbai) ➔ MAO (Madgaon)', sub: 'Vande Bharat Express (22229) • 7h 45m' },
+      { label: 'LTT (Mumbai) ➔ KRMI (Karmali)', sub: 'Tejas Express (22119) • Luxury Chair Car' },
+      { label: 'NZM (Delhi) ➔ MAO (Madgaon)', sub: 'Goa Rajdhani Express (12432)' },
+      { label: 'SBC (Bengaluru) ➔ MAO (Madgaon)', sub: 'Yesvantpur Vasco Express' },
+    ],
+    cabs: [
+      { label: 'Goa Airport (GOI) ➔ Candolim', sub: 'Toyota Innova Crysta • Airport Transfer' },
+      { label: 'Goa Airport (GOI) ➔ Anjuna / Vagator', sub: 'Sedan (Dzire / Etios) • Chauffeur Driven' },
+      { label: 'Goa Mopa Airport (GOX) ➔ Panjim', sub: 'Electric SUV / Mercedes Executive' },
+      { label: 'Mumbai City ➔ Pune Outstation', sub: 'Roundtrip Chauffeur Cab Rental' },
+    ],
+    events: [
+      { label: 'North Goa Sunset Catamaran Cruise', sub: 'Mandovi River • Live DJ & Dinner' },
+      { label: 'Anjuna Beach Electronic Night', sub: 'Hilltop Festival Grounds' },
+      { label: 'Dudhsagar Waterfall Jeep Safari', sub: 'Mollem National Park Expedition' },
+      { label: 'Old Goa Heritage & Spice Plantation', sub: 'Guided Tour with Goan Thali Lunch' },
+    ],
+  };
+
+  const dateOptions = [
+    { label: '18 Nov 2025 - 22 Nov 2025', sub: '4 Nights • Recommended' },
+    { label: '25 Nov 2025 - 29 Nov 2025', sub: '4 Nights • Low Crowds' },
+    { label: '02 Dec 2025 - 06 Dec 2025', sub: '4 Nights • Weekend Special' },
+    { label: '24 Dec 2025 - 28 Dec 2025', sub: '4 Nights • Christmas Holiday' },
+  ];
+
+  const guestOptions: Record<SearchTab, { label: string; sub: string }[]> = {
+    hotels: [
+      { label: '2 Adults, 1 Room', sub: 'Standard Double Occupancy' },
+      { label: '1 Adult, 1 Room', sub: 'Solo Traveler' },
+      { label: '4 Adults, 2 Rooms', sub: 'Family / Group Stay' },
+      { label: '2 Adults, 2 Children', sub: 'Family Suite' },
+    ],
+    buses: [
+      { label: '1 Berth • AC Sleeper', sub: 'Lower Deck Window' },
+      { label: '2 Berths • AC Sleeper Couple', sub: 'Adjacent Berths' },
+      { label: '2 Seats • Semi Sleeper', sub: 'Pushback Chairs' },
+    ],
+    flights: [
+      { label: '1 Adult • Economy Class', sub: 'Regular Fare • 15kg Baggage' },
+      { label: '2 Adults • Economy Class', sub: 'Couple Booking' },
+      { label: '1 Adult • Business Class', sub: 'Priority Lounge Access' },
+    ],
+    trains: [
+      { label: 'AC Chair Car (CC)', sub: 'Vande Bharat / Tejas Express' },
+      { label: 'Executive Class (EC)', sub: 'Luxury Recliner Seats & Meals' },
+      { label: '2A - AC 2 Tier', sub: 'Berth with Privacy Curtain' },
+    ],
+    cabs: [
+      { label: 'Toyota Innova Crysta (6 Seater)', sub: 'Spacious Luggage & AC' },
+      { label: 'Swift Dzire / Etios (Sedan)', sub: 'Comfortable 4 Seater' },
+      { label: 'Force Urbania (12 Seater)', sub: 'Large Group / Family Van' },
+    ],
+    events: [
+      { label: '2 Guest Passes', sub: 'Standard Entry & Welcome Drink' },
+      { label: '4 VIP Guest Passes', sub: 'Fast Track Entry & Lounge Access' },
+      { label: '1 Solo Pass', sub: 'Standard Experience' },
+    ],
+  };
+
   // AI Trip Planner states
   const [budget, setBudget] = useState(45000);
   const [departureCity, setDepartureCity] = useState('BOM');
@@ -110,7 +201,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
       )}
 
       {/* HERO SECTION WITH UNIFIED SEARCH */}
-      <section className="relative w-full pt-16 pb-20 bg-[#131a33] text-white overflow-hidden">
+      <section className="relative w-full pt-16 pb-20 bg-[#131a33] text-white overflow-visible">
         {/* Ambient Glows & Constellation Vectors */}
         <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-[#645efb]/20 blur-3xl pointer-events-none"></div>
         <div className="absolute top-1/3 -right-20 w-[30rem] h-[30rem] rounded-full bg-[#4cd7f6]/15 blur-3xl pointer-events-none"></div>
@@ -243,57 +334,287 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
               </button>
             </div>
 
-            {/* Search Input Matrix */}
-            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-2 items-center bg-[#f2f3ff] p-2 rounded-xl">
+            {/* Search Input Matrix - MakeMyTrip Click-to-Select Style */}
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-2 items-center bg-[#f2f3ff] p-2 rounded-xl relative">
               {/* Segment 1: From / Destination */}
-              <div className="lg:col-span-4 bg-white p-3 rounded-lg shadow-xs hover:bg-[#faf8ff] transition-colors cursor-pointer group border border-[#eaedff]">
-                <label className="block text-xs text-[#45464d] font-semibold">From / Destination</label>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="material-symbols-outlined text-[#4b41e1] text-lg">pin_drop</span>
-                  <input
-                    className="w-full bg-transparent font-bold text-base text-[#131b2e] focus:outline-none"
-                    type="text"
-                    value={destination}
-                    onChange={(e) => setDestination(e.target.value)}
-                  />
+              <div 
+                onClick={() => {
+                  setShowDestDropdown(!showDestDropdown);
+                  setShowDateDropdown(false);
+                  setShowGuestDropdown(false);
+                }}
+                className="lg:col-span-4 bg-white p-3 rounded-lg shadow-xs hover:bg-[#faf8ff] transition-colors cursor-pointer group border border-[#eaedff] relative select-none"
+              >
+                <label className="block text-xs text-[#45464d] font-semibold">From / Destination (Click to Select)</label>
+                <div className="flex items-center justify-between mt-0.5">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <span className="material-symbols-outlined text-[#4b41e1] text-lg">pin_drop</span>
+                    <span className="font-bold text-base text-[#131b2e] truncate">{destination}</span>
+                  </div>
+                  <span className="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
                 </div>
                 <span className="block text-xs text-[#76767e] truncate mt-0.5">
-                  North & South Goa, Beach Resorts, Candolim
+                  Click to select popular destinations & hubs
                 </span>
+
+                {/* Destination Dropdown Popup */}
+                {showDestDropdown && (
+                  <div className="absolute top-full left-0 mt-2 w-full sm:w-96 bg-white rounded-2xl shadow-2xl border border-[#e2e7ff] p-3 z-50 animate-in fade-in zoom-in-95">
+                    <div className="text-xs font-bold text-[#4b41e1] px-2 pb-2 border-b border-[#f2f3ff] flex items-center justify-between">
+                      <span>Select Recommended Destination</span>
+                      <span className="text-[10px] text-slate-400">MakeMyTrip Style</span>
+                    </div>
+                    <div className="max-h-64 overflow-y-auto space-y-1 mt-2">
+                      {destinationOptions[activeTab]?.map((item, idx) => (
+                        <div
+                          key={idx}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDestination(item.label);
+                            setShowDestDropdown(false);
+                          }}
+                          className="p-2.5 rounded-xl hover:bg-[#f2f3ff] transition-colors cursor-pointer text-left"
+                        >
+                          <div className="text-xs font-bold text-[#131b2e]">{item.label}</div>
+                          <div className="text-[11px] text-[#76767e]">{item.sub}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Segment 2: Dates */}
-              <div className="lg:col-span-3 bg-white p-3 rounded-lg shadow-xs hover:bg-[#faf8ff] transition-colors cursor-pointer group border border-[#eaedff]">
-                <label className="block text-xs text-[#45464d] font-semibold">Dates</label>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="material-symbols-outlined text-[#4b41e1] text-lg">calendar_today</span>
-                  <input
-                    className="w-full bg-transparent font-bold text-base text-[#131b2e] focus:outline-none"
-                    type="text"
-                    value={dates}
-                    onChange={(e) => setDates(e.target.value)}
-                  />
+              {/* Segment 2: Dates with Interactive Calendar */}
+              <div 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDateDropdown(!showDateDropdown);
+                  setShowDestDropdown(false);
+                  setShowGuestDropdown(false);
+                }}
+                className="lg:col-span-3 bg-white p-3 rounded-lg shadow-xs hover:bg-[#faf8ff] transition-colors cursor-pointer group border border-[#eaedff] relative select-none"
+              >
+                <label className="block text-xs text-[#45464d] font-semibold">Travel Dates (Calendar Picker)</label>
+                <div className="flex items-center justify-between mt-0.5">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <span className="material-symbols-outlined text-[#4b41e1] text-lg">calendar_today</span>
+                    <span className="font-bold text-base text-[#131b2e] truncate">{dates}</span>
+                  </div>
+                  <span className="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
                 </div>
                 <span className="block text-xs text-[#76767e] truncate mt-0.5">
-                  4 Nights • Tuesday to Saturday
+                  Click to pick check-in / check-out
                 </span>
+
+                {/* Interactive Calendar Popup */}
+                {showDateDropdown && (
+                  <div 
+                    onClick={(e) => e.stopPropagation()}
+                    className="absolute top-full left-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-[#e2e7ff] p-4 z-50 animate-in fade-in zoom-in-95 text-[#131b2e]"
+                  >
+                    <div className="flex items-center justify-between pb-3 border-b border-[#f2f3ff]">
+                      <span className="text-xs font-bold text-[#4b41e1]">November 2025 Calendar</span>
+                      <span className="text-[10px] bg-[#f2f3ff] text-[#4b41e1] font-bold px-2 py-0.5 rounded-full">Interactive</span>
+                    </div>
+                    
+                    <div className="grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-slate-400 mt-3">
+                      <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                    </div>
+
+                    <div className="grid grid-cols-7 gap-1 text-center text-xs mt-1">
+                      {Array.from({ length: 30 }).map((_, i) => {
+                        const dayNum = i + 1;
+                        const dateStr = `${dayNum < 10 ? '0' + dayNum : dayNum} Nov 2025`;
+                        const isSelected = dates.includes(dateStr);
+                        return (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => {
+                              setDates(`${dateStr} - 22 Nov 2025 (4N)`);
+                              setShowDateDropdown(false);
+                            }}
+                            className={`p-1.5 rounded-lg font-bold transition-all ${
+                              isSelected ? 'bg-[#4b41e1] text-white shadow-md' : 'hover:bg-[#f2f3ff] text-[#131b2e]'
+                            }`}
+                          >
+                            {dayNum}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-[#f2f3ff]">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Quick Presets:</span>
+                      <div className="grid grid-cols-2 gap-1.5">
+                        {dateOptions.map((item, idx) => (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => {
+                              setDates(item.label);
+                              setShowDateDropdown(false);
+                            }}
+                            className="p-1.5 rounded-lg bg-[#f2f3ff] hover:bg-[#eaedff] text-[10px] font-bold text-[#4b41e1] text-left truncate"
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Segment 3: Guests & Class */}
-              <div className="lg:col-span-3 bg-white p-3 rounded-lg shadow-xs hover:bg-[#faf8ff] transition-colors cursor-pointer group border border-[#eaedff]">
-                <label className="block text-xs text-[#45464d] font-semibold">Guests & Class</label>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="material-symbols-outlined text-[#4b41e1] text-lg">group</span>
-                  <input
-                    className="w-full bg-transparent font-bold text-base text-[#131b2e] focus:outline-none"
-                    type="text"
-                    value={guests}
-                    onChange={(e) => setGuests(e.target.value)}
-                  />
+              {/* Segment 3: Guests & Rooms with +/- Counter */}
+              <div 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowGuestDropdown(!showGuestDropdown);
+                  setShowDestDropdown(false);
+                  setShowDateDropdown(false);
+                }}
+                className="lg:col-span-3 bg-white p-3 rounded-lg shadow-xs hover:bg-[#faf8ff] transition-colors cursor-pointer group border border-[#eaedff] relative select-none"
+              >
+                <label className="block text-xs text-[#45464d] font-semibold">Guests & Rooms (Counter)</label>
+                <div className="flex items-center justify-between mt-0.5">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <span className="material-symbols-outlined text-[#4b41e1] text-lg">group</span>
+                    <span className="font-bold text-base text-[#131b2e] truncate">{guests}</span>
+                  </div>
+                  <span className="material-symbols-outlined text-slate-400 text-sm">expand_more</span>
                 </div>
                 <span className="block text-xs text-[#76767e] truncate mt-0.5">
-                  Deluxe / AC Class • Regular Fare
+                  Click to add adults, kids & rooms
                 </span>
+
+                {/* Interactive Guests Counter Popup */}
+                {showGuestDropdown && (
+                  <div 
+                    onClick={(e) => e.stopPropagation()}
+                    className="absolute top-full right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-[#e2e7ff] p-4 z-50 animate-in fade-in zoom-in-95 text-[#131b2e]"
+                  >
+                    <div className="flex items-center justify-between pb-3 border-b border-[#f2f3ff]">
+                      <span className="text-xs font-bold text-[#4b41e1]">Select Guests & Rooms</span>
+                      <span className="text-[10px] text-slate-400">MakeMyTrip Style</span>
+                    </div>
+
+                    <div className="space-y-3 mt-3">
+                      {/* Adults Counter */}
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-xs font-bold text-[#131b2e]">Adults</div>
+                          <div className="text-[10px] text-slate-400">Aged 12+ years</div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (adultsCount > 1) {
+                                const next = adultsCount - 1;
+                                setAdultsCount(next);
+                                setGuests(`${next} Adults, ${roomsCount} Room${roomsCount > 1 ? 's' : ''}`);
+                              }
+                            }}
+                            className="w-7 h-7 rounded-lg bg-[#f2f3ff] hover:bg-[#eaedff] text-[#4b41e1] font-black flex items-center justify-center text-sm"
+                          >
+                            -
+                          </button>
+                          <span className="w-6 text-center text-xs font-bold">{adultsCount}</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const next = adultsCount + 1;
+                              setAdultsCount(next);
+                              setGuests(`${next} Adults, ${roomsCount} Room${roomsCount > 1 ? 's' : ''}`);
+                            }}
+                            className="w-7 h-7 rounded-lg bg-[#4b41e1] text-white font-black flex items-center justify-center text-sm"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Children Counter */}
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-xs font-bold text-[#131b2e]">Children</div>
+                          <div className="text-[10px] text-slate-400">Aged 0 - 11 years</div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (childrenCount > 0) {
+                                const next = childrenCount - 1;
+                                setChildrenCount(next);
+                                setGuests(`${adultsCount} Adults, ${next} Child, ${roomsCount} Room${roomsCount > 1 ? 's' : ''}`);
+                              }
+                            }}
+                            className="w-7 h-7 rounded-lg bg-[#f2f3ff] hover:bg-[#eaedff] text-[#4b41e1] font-black flex items-center justify-center text-sm"
+                          >
+                            -
+                          </button>
+                          <span className="w-6 text-center text-xs font-bold">{childrenCount}</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const next = childrenCount + 1;
+                              setChildrenCount(next);
+                              setGuests(`${adultsCount} Adults, ${next} Children, ${roomsCount} Room${roomsCount > 1 ? 's' : ''}`);
+                            }}
+                            className="w-7 h-7 rounded-lg bg-[#4b41e1] text-white font-black flex items-center justify-center text-sm"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Rooms Counter */}
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-xs font-bold text-[#131b2e]">Rooms</div>
+                          <div className="text-[10px] text-slate-400">Number of rooms</div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (roomsCount > 1) {
+                                const next = roomsCount - 1;
+                                setRoomsCount(next);
+                                setGuests(`${adultsCount} Adults, ${next} Room${next > 1 ? 's' : ''}`);
+                              }
+                            }}
+                            className="w-7 h-7 rounded-lg bg-[#f2f3ff] hover:bg-[#eaedff] text-[#4b41e1] font-black flex items-center justify-center text-sm"
+                          >
+                            -
+                          </button>
+                          <span className="w-6 text-center text-xs font-bold">{roomsCount}</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const next = roomsCount + 1;
+                              setRoomsCount(next);
+                              setGuests(`${adultsCount} Adults, ${next} Rooms`);
+                            }}
+                            className="w-7 h-7 rounded-lg bg-[#4b41e1] text-white font-black flex items-center justify-center text-sm"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setShowGuestDropdown(false)}
+                      className="w-full mt-4 py-2.5 bg-[#4b41e1] hover:bg-[#645efb] text-white rounded-xl text-xs font-bold shadow-md cursor-pointer"
+                    >
+                      Done & Apply Guests
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Action Button: Search Trigger */}

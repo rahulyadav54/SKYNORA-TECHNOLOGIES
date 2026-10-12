@@ -21,6 +21,8 @@ import { CheckoutView } from './components/CheckoutView';
 import { VoucherConfirmView } from './components/VoucherConfirmView';
 import { ProfileView } from './components/ProfileView';
 import { PartnerPortalView } from './components/PartnerPortalView';
+import { AdminView } from './components/AdminView';
+import { LoginPortalView } from './components/LoginPortalView';
 import { ModifySearchModal } from './components/Modals';
 import { GeminiConciergeModal } from './components/GeminiConciergeModal';
 import {
@@ -351,6 +353,26 @@ export default function App() {
         {currentView === 'partner-portal' && (
           <PartnerPortalView
             onNavigate={handleNavigate}
+          />
+        )}
+
+        {currentView === 'admin' && (
+          <AdminView
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {currentView === 'login-portal' && (
+          <LoginPortalView
+            onNavigate={handleNavigate}
+            onLoginSuccess={(userObj) => {
+              // Convert userObj to Firebase-like User or update state
+              setCurrentUser({
+                displayName: userObj.name,
+                email: userObj.email,
+                photoURL: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA870SKCuQB5h2mt-l5QN0MX7I1xMHQpxDaHJEA4dbiz-kvnZrvbT0xd9oE8zq1e6Uh6knVRfIyCzjkve6OYw3KDs_g-JFiYKVSYFVOOycxNd5fT13nz7Nhn0SDuU4_SDM7Oct1sU45XgPcJYc5iC5zi1NwPHWuHb4Kpe8EVC4Ld04nzM8MRxTOtZHp9G6oaL8PAVCc0n0mth9fae_aWn6G87CwVPDBXfM5Nx8kJOThtuD0F86pY7FaPQ'
+              } as User);
+            }}
           />
         )}
       </main>

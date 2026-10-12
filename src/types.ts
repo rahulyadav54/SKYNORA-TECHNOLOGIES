@@ -11,7 +11,11 @@ export type AppView =
   | 'checkout'
   | 'booking-voucher'
   | 'profile'
-  | 'partner-portal';
+  | 'partner-portal'
+  | 'admin'
+  | 'login-portal';
+
+export type UserRole = 'customer' | 'hotel-partner' | 'flight-partner' | 'bus-operator' | 'cab-vendor' | 'admin';
 
 export type SearchTab = 'hotels' | 'buses' | 'flights' | 'trains' | 'cabs' | 'events';
 
