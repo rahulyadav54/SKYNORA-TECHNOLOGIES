@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account profile and travel preferences",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "phoneNumber": { "type": "string", "maxLength": 20 },
+        "tier": { "type": "string", "maxLength": 30 },
+        "walletBalance": { "type": "number" },
+        "rewardPoints": { "type": "number" },
+        "gstin": { "type": "string", "maxLength": 20 },
+        "updatedAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["uid", "email"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Travel booking record for hotels, flights, buses, trains, or experiences",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "category": { "type": "string", "maxLength": 32 },
+        "title": { "type": "string", "maxLength": 200 },
+        "pnr": { "type": "string", "maxLength": 32 },
+        "referenceId": { "type": "string", "maxLength": 32 },
+        "dates": { "type": "string", "maxLength": 100 },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "maxLength": 32 },
+        "paymentMode": { "type": "string", "maxLength": 32 },
+        "createdAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["id", "userId", "category", "title", "amount", "status"]
+    },
+    "Wishlist": {
+      "title": "Wishlist",
+      "description": "Saved properties or experiences by user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "propertyId": { "type": "string", "maxLength": 100 },
+        "savedAt": { "type": "string", "maxLength": 40 }
+      },
+      "required": ["userId", "propertyId"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile data keyed by user UID"
+    },
+    "/users/{userId}/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "User bookings and reservation records"
+    },
+    "/users/{userId}/wishlist/{propertyId}": {
+      "schema": "Wishlist",
+      "description": "User saved wishlist items"
+    }
+  }
+}

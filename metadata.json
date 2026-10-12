@@ -1,0 +1,6 @@
+{
+  "name": "Skynora Travels",
+  "description": "Discover, compare, plan, and book interconnected flights, heritage stays, trains, luxury coaches, and hand-picked experiences across India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
