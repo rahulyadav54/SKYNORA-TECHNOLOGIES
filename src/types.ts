@@ -4,6 +4,7 @@ export type AppView =
   | 'buses'
   | 'flights'
   | 'trains'
+  | 'cabs'
   | 'experiences'
   | 'help'
   | 'hotel-detail'

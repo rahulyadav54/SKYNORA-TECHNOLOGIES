@@ -187,7 +187,7 @@ export const HotelsView: React.FC<HotelsViewProps> = ({
               <span>Hotels & Stays</span>
             </button>
             <button
-              onClick={() => alert('Viewing available flights for this route')}
+              onClick={() => onNavigate('flights')}
               className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#f2f3ff] hover:bg-[#e2e7ff] text-[#45464d] hover:text-[#131b2e] rounded-full text-xs font-medium transition-colors flex-shrink-0 cursor-pointer"
               type="button"
             >
@@ -195,7 +195,7 @@ export const HotelsView: React.FC<HotelsViewProps> = ({
               <span>Flights</span>
             </button>
             <button
-              onClick={() => alert('Viewing IRCTC trains for this route')}
+              onClick={() => onNavigate('trains')}
               className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#f2f3ff] hover:bg-[#e2e7ff] text-[#45464d] hover:text-[#131b2e] rounded-full text-xs font-medium transition-colors flex-shrink-0 cursor-pointer"
               type="button"
             >
@@ -203,7 +203,7 @@ export const HotelsView: React.FC<HotelsViewProps> = ({
               <span>Trains (IRCTC)</span>
             </button>
             <button
-              onClick={() => alert('Viewing intercity buses for this route')}
+              onClick={() => onNavigate('buses')}
               className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#f2f3ff] hover:bg-[#e2e7ff] text-[#45464d] hover:text-[#131b2e] rounded-full text-xs font-medium transition-colors flex-shrink-0 cursor-pointer"
               type="button"
             >
@@ -211,7 +211,7 @@ export const HotelsView: React.FC<HotelsViewProps> = ({
               <span>Buses</span>
             </button>
             <button
-              onClick={() => alert('Viewing verified airport cabs for this route')}
+              onClick={() => onNavigate('cabs')}
               className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#f2f3ff] hover:bg-[#e2e7ff] text-[#45464d] hover:text-[#131b2e] rounded-full text-xs font-medium transition-colors flex-shrink-0 cursor-pointer"
               type="button"
             >
@@ -829,11 +829,14 @@ export const HotelsView: React.FC<HotelsViewProps> = ({
                 </button>
               </div>
               <button
-                onClick={() => alert('Loaded 20 more luxury stays in North and South Goa.')}
+                onClick={() => {
+                  setCouponCodeCopied(true);
+                  setTimeout(() => setCouponCodeCopied(false), 3000);
+                }}
                 className="px-4 py-2 bg-[#e2e7ff] hover:bg-[#dae2fd] text-[#131b2e] rounded-xl text-xs font-bold transition-colors cursor-pointer"
                 type="button"
               >
-                Load 20 More Stays
+                All 42 Stays Synced Live
               </button>
             </div>
           </main>

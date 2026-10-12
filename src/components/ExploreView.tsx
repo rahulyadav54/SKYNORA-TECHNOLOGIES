@@ -25,6 +25,36 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
   const [selectedVibe, setSelectedVibe] = useState('Beach & Wellness');
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
   const [claimedCode, setClaimedCode] = useState<string | null>(null);
+  const [appDownloadNotice, setAppDownloadNotice] = useState(false);
+
+  const handleTabChange = (tab: SearchTab) => {
+    setActiveTab(tab);
+    if (tab === 'buses') {
+      setDestination('Mumbai to Goa (Panjim / Mapusa)');
+      setDates('18 Nov 2025');
+      setGuests('1 Berth • AC Sleeper');
+    } else if (tab === 'flights') {
+      setDestination('BOM (Mumbai) ➔ GOI (Goa Dabolim)');
+      setDates('18 Nov 2025');
+      setGuests('1 Adult • Economy');
+    } else if (tab === 'trains') {
+      setDestination('CSMT (Mumbai) ➔ MAO (Madgaon)');
+      setDates('18 Nov 2025');
+      setGuests('AC Chair Car (Vande Bharat)');
+    } else if (tab === 'cabs') {
+      setDestination('Goa Airport (GOI) ➔ Candolim');
+      setDates('18 Nov 2025');
+      setGuests('Toyota Innova Crysta');
+    } else if (tab === 'events') {
+      setDestination('North Goa Coastal Sunset & Water Sports');
+      setDates('19 Nov 2025');
+      setGuests('2 Guest Passes');
+    } else {
+      setDestination('Goa, India (Candolim & Sinquerim)');
+      setDates('18 Nov - 22 Nov');
+      setGuests('2 Adults, 1 Room');
+    }
+  };
 
   const handleSearchSubmit = () => {
     onSearch({
@@ -41,6 +71,8 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
       onNavigate('flights');
     } else if (activeTab === 'trains') {
       onNavigate('trains');
+    } else if (activeTab === 'cabs') {
+      onNavigate('cabs');
     } else if (activeTab === 'events') {
       onNavigate('experiences');
     } else {
@@ -143,7 +175,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
                     ? 'bg-[#4b41e1] text-white shadow-sm'
                     : 'bg-[#f2f3ff] text-[#131b2e] hover:bg-[#eaedff]'
                 }`}
-                onClick={() => setActiveTab('hotels')}
+                onClick={() => handleTabChange('hotels')}
                 type="button"
               >
                 <span className="material-symbols-outlined text-lg">hotel</span>
@@ -155,7 +187,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
                     ? 'bg-[#4b41e1] text-white shadow-sm'
                     : 'bg-[#f2f3ff] text-[#131b2e] hover:bg-[#eaedff]'
                 }`}
-                onClick={() => setActiveTab('buses')}
+                onClick={() => handleTabChange('buses')}
                 type="button"
               >
                 <span className="material-symbols-outlined text-lg">directions_bus</span>
@@ -167,7 +199,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
                     ? 'bg-[#4b41e1] text-white shadow-sm'
                     : 'bg-[#f2f3ff] text-[#131b2e] hover:bg-[#eaedff]'
                 }`}
-                onClick={() => setActiveTab('flights')}
+                onClick={() => handleTabChange('flights')}
                 type="button"
               >
                 <span className="material-symbols-outlined text-lg">flight_takeoff</span>
@@ -179,7 +211,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
                     ? 'bg-[#4b41e1] text-white shadow-sm'
                     : 'bg-[#f2f3ff] text-[#131b2e] hover:bg-[#eaedff]'
                 }`}
-                onClick={() => setActiveTab('trains')}
+                onClick={() => handleTabChange('trains')}
                 type="button"
               >
                 <span className="material-symbols-outlined text-lg">train</span>
@@ -191,7 +223,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
                     ? 'bg-[#4b41e1] text-white shadow-sm'
                     : 'bg-[#f2f3ff] text-[#131b2e] hover:bg-[#eaedff]'
                 }`}
-                onClick={() => setActiveTab('cabs')}
+                onClick={() => handleTabChange('cabs')}
                 type="button"
               >
                 <span className="material-symbols-outlined text-lg">local_taxi</span>
@@ -203,7 +235,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
                     ? 'bg-[#4b41e1] text-white shadow-sm'
                     : 'bg-[#f2f3ff] text-[#131b2e] hover:bg-[#eaedff]'
                 }`}
-                onClick={() => setActiveTab('events')}
+                onClick={() => handleTabChange('events')}
                 type="button"
               >
                 <span className="material-symbols-outlined text-lg">confirmation_number</span>
@@ -427,7 +459,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
                 <button
                   onClick={() => {
                     handleClaimPromo('SKYNORABUS');
-                    onNavigate('hotels');
+                    onNavigate('buses');
                   }}
                   className="text-xs text-[#4b41e1] hover:text-[#3323cc] flex items-center gap-1 font-bold cursor-pointer"
                 >
@@ -501,7 +533,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
 
             {/* Card 2: Bus & Travel */}
             <div
-              onClick={() => onNavigate('hotels')}
+              onClick={() => onNavigate('buses')}
               className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col border border-[#eaedff] cursor-pointer"
             >
               <div className="relative h-56 overflow-hidden">
@@ -545,7 +577,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
 
             {/* Card 3: Flights & Trains */}
             <div
-              onClick={() => onNavigate('hotels')}
+              onClick={() => onNavigate('flights')}
               className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col border border-[#eaedff] cursor-pointer"
             >
               <div className="relative h-56 overflow-hidden">
@@ -589,7 +621,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
 
             {/* Card 4: Taxis & Rentals */}
             <div
-              onClick={() => onNavigate('hotels')}
+              onClick={() => onNavigate('cabs')}
               className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col border border-[#eaedff] cursor-pointer"
             >
               <div className="relative h-56 overflow-hidden">
@@ -633,7 +665,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
 
             {/* Card 5: Restaurants & Appointments */}
             <div
-              onClick={() => onNavigate('hotels')}
+              onClick={() => onNavigate('experiences')}
               className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col border border-[#eaedff] cursor-pointer"
             >
               <div className="relative h-56 overflow-hidden">
@@ -675,7 +707,7 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
 
             {/* Card 6: Events & Venues */}
             <div
-              onClick={() => onNavigate('hotels')}
+              onClick={() => onNavigate('experiences')}
               className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col border border-[#eaedff] cursor-pointer"
             >
               <div className="relative h-56 overflow-hidden">
@@ -1326,19 +1358,31 @@ export const ExploreView: React.FC<ExploreViewProps> = ({
               </p>
               <div className="flex flex-wrap items-center gap-3 mt-6">
                 <button
-                  onClick={() => alert('Download link sent to mobile SMS!')}
+                  onClick={() => {
+                    setAppDownloadNotice(true);
+                    setTimeout(() => setAppDownloadNotice(false), 4000);
+                  }}
                   className="bg-white text-[#131b2e] px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-[#dae2fd] transition-colors shadow-sm cursor-pointer"
                 >
                   <span className="material-symbols-outlined">android</span> Google Play
                 </button>
                 <button
-                  onClick={() => alert('Download link sent to mobile SMS!')}
+                  onClick={() => {
+                    setAppDownloadNotice(true);
+                    setTimeout(() => setAppDownloadNotice(false), 4000);
+                  }}
                   className="bg-white text-[#131b2e] px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-[#dae2fd] transition-colors shadow-sm cursor-pointer"
                 >
                   <span className="material-symbols-outlined">phone_iphone</span> App Store
                 </button>
                 <span className="text-[#7b83a0] text-xs ml-2">4.8 ★ rating across 180K+ app reviews</span>
               </div>
+              {appDownloadNotice && (
+                <div className="mt-4 p-3 bg-white/20 text-[#acedff] rounded-xl text-xs font-bold flex items-center gap-2 animate-fade-in">
+                  <span className="material-symbols-outlined text-sm">sms</span>
+                  <span>SMS link with Skynora Super-App APK dispatched to your registered phone!</span>
+                </div>
+              )}
             </div>
 
             <div className="relative shrink-0 flex items-center justify-center p-6 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10 text-center">

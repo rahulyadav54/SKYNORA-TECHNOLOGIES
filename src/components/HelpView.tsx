@@ -65,12 +65,14 @@ export const HelpView: React.FC<HelpViewProps> = ({ onNavigate }) => {
               <h3 className="font-bold text-base text-[#131b2e] mb-1">WhatsApp Platinum Desk</h3>
               <p className="text-xs text-[#5a5c65] mb-4">Chat directly with a human travel curator within 45 seconds.</p>
             </div>
-            <button
-              onClick={() => window.open('https://wa.me/919811240019', '_blank')}
-              className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors cursor-pointer"
+            <a
+              href="https://wa.me/919811240019"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors cursor-pointer text-center block"
             >
               Start WhatsApp Chat
-            </button>
+            </a>
           </div>
 
           <div className="bg-white p-6 rounded-3xl border border-[#e2e7ff] shadow-sm flex flex-col justify-between">

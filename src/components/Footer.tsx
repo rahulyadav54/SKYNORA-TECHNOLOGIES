@@ -46,28 +46,28 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('hotels')} className="cursor-pointer text-left">
+                <button onClick={() => onNavigate?.('buses')} className="cursor-pointer text-left">
                   Bus Tickets
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('hotels')} className="cursor-pointer text-left">
+                <button onClick={() => onNavigate?.('flights')} className="cursor-pointer text-left">
                   Flight Bookings
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('hotels')} className="cursor-pointer text-left">
+                <button onClick={() => onNavigate?.('trains')} className="cursor-pointer text-left">
                   IRCTC Train Bookings
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('hotels')} className="cursor-pointer text-left">
+                <button onClick={() => onNavigate?.('cabs')} className="cursor-pointer text-left">
                   Cab & Outstation
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('hotels')} className="cursor-pointer text-left">
-                  Self-Drive Rentals
+                <button onClick={() => onNavigate?.('cabs')} className="cursor-pointer text-left">
+                  Airport Transfers & Rentals
                 </button>
               </li>
             </ul>
@@ -78,23 +78,23 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <h3 className="text-sm font-semibold text-white">Lifestyle & Events</h3>
             <ul className="flex flex-col gap-1.5 text-xs">
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('hotels')} className="cursor-pointer text-left">
-                  Fine Dining
+                <button onClick={() => onNavigate?.('experiences')} className="cursor-pointer text-left">
+                  Fine Dining & Experiences
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('hotels')} className="cursor-pointer text-left">
-                  Salon & Spa Appointments
+                <button onClick={() => onNavigate?.('experiences')} className="cursor-pointer text-left">
+                  Salon & Ayurvedic Spas
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('hotels')} className="cursor-pointer text-left">
-                  Live Events
+                <button onClick={() => onNavigate?.('experiences')} className="cursor-pointer text-left">
+                  Live Events & Shows
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('hotels')} className="cursor-pointer text-left">
-                  Wedding Venues
+                <button onClick={() => onNavigate?.('experiences')} className="cursor-pointer text-left">
+                  Curated Safari & Cruises
                 </button>
               </li>
             </ul>
@@ -110,18 +110,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('explore')} className="cursor-pointer text-left">
-                  Careers
-                </button>
-              </li>
-              <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('explore')} className="cursor-pointer text-left">
-                  Press
+                <button onClick={() => onNavigate?.('profile')} className="cursor-pointer text-left">
+                  My Rewards & Wallet
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
                 <button onClick={() => onNavigate?.('partner-portal')} className="cursor-pointer text-left text-[#acedff]">
-                  Partner Portal (B2B)
+                  Partner Portal (B2B Central)
                 </button>
               </li>
             </ul>
@@ -129,26 +124,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Support & Legal */}
           <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold text-white">Support & Legal</h3>
+            <h3 className="text-sm font-semibold text-white">Support & Assistance</h3>
             <ul className="flex flex-col gap-1.5 text-xs">
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('profile')} className="cursor-pointer text-left">
-                  Customer Care
+                <button onClick={() => onNavigate?.('help')} className="cursor-pointer text-left">
+                  24x7 Customer Care Desk
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('profile')} className="cursor-pointer text-left">
-                  Cancellation Policy
+                <button onClick={() => onNavigate?.('help')} className="cursor-pointer text-left">
+                  Instant UPI Refund Tracker
                 </button>
               </li>
               <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('profile')} className="cursor-pointer text-left">
-                  Terms & Privacy
-                </button>
-              </li>
-              <li className="hover:text-white transition-colors">
-                <button onClick={() => onNavigate?.('profile')} className="cursor-pointer text-left">
-                  Security & Trust
+                <button onClick={() => onNavigate?.('help')} className="cursor-pointer text-left">
+                  Cancellation Policies
                 </button>
               </li>
             </ul>

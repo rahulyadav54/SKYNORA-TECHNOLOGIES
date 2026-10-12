@@ -24,6 +24,7 @@ export const HotelDetailView: React.FC<HotelDetailViewProps> = ({
   const [selectedRoomId, setSelectedRoomId] = useState('superior-king');
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [shareToast, setShareToast] = useState(false);
+  const [showAllAmenities, setShowAllAmenities] = useState(false);
 
   // Active room & meal plan pricing
   const currentRoom = ROOM_OPTIONS.find((r) => r.id === selectedRoomId) || ROOM_OPTIONS[0];
@@ -710,10 +711,10 @@ export const HotelDetailView: React.FC<HotelDetailViewProps> = ({
                     <p className="text-xs text-[#45464d]">Curated luxury services designed for seamless leisure and heritage wellness.</p>
                   </div>
                   <button
-                    onClick={() => alert('Showing all 48 Taj Fort Aguada luxury amenities.')}
+                    onClick={() => setShowAllAmenities(!showAllAmenities)}
                     className="text-xs font-bold text-[#4b41e1] hover:underline cursor-pointer"
                   >
-                    View All 48 Amenities
+                    {showAllAmenities ? 'Show Fewer Amenities' : 'View All 48 Amenities'}
                   </button>
                 </div>
 
@@ -730,7 +731,17 @@ export const HotelDetailView: React.FC<HotelDetailViewProps> = ({
                     { icon: 'local_taxi', title: 'Airport Concierge', desc: 'Chauffeured sedan service' },
                     { icon: 'sports_tennis', title: 'Tennis & Squash', desc: 'Floodlit all-weather court' },
                     { icon: 'child_friendly', title: 'Kids Activity Club', desc: 'Supervised play lounge' },
-                    { icon: 'restaurant', title: '5 Specialty Dining', desc: 'Seafood, Goan & Global' }
+                    { icon: 'restaurant', title: '5 Specialty Dining', desc: 'Seafood, Goan & Global' },
+                    ...(showAllAmenities ? [
+                      { icon: 'sailing', title: 'Yacht Charter Dock', desc: 'Direct boat boarding' },
+                      { icon: 'deck', title: 'Private Sun Deck', desc: 'Ocean lounger cushions' },
+                      { icon: 'lock', title: 'In-Room Electronic Safe', desc: 'Laptop size security' },
+                      { icon: 'medical_services', title: 'On-Call Doctor', desc: '24x7 medical assistance' },
+                      { icon: 'currency_exchange', title: 'Foreign Exchange', desc: 'Multi-currency desk' },
+                      { icon: 'dry_cleaning', title: 'Express Laundry', desc: 'Same-day turnaround' },
+                      { icon: 'luggage', title: 'Luggage Storage', desc: 'Pre-checkin concierge' },
+                      { icon: 'accessibility_new', title: 'Barrier-Free Access', desc: 'Wheelchair ramps & lifts' }
+                    ] : [])
                   ].map((amenity) => (
                     <div key={amenity.title} className="flex items-center gap-2.5 p-3 rounded-xl bg-[#f2f3ff] border border-[#eaedff]">
                       <span className="material-symbols-outlined text-[#4b41e1] text-xl">{amenity.icon}</span>

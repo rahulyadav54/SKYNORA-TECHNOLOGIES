@@ -13,6 +13,7 @@ import { HotelsView } from './components/HotelsView';
 import { BusesView } from './components/BusesView';
 import { FlightsView } from './components/FlightsView';
 import { TrainsView } from './components/TrainsView';
+import { CabsView } from './components/CabsView';
 import { ExperiencesView } from './components/ExperiencesView';
 import { HelpView } from './components/HelpView';
 import { HotelDetailView } from './components/HotelDetailView';
@@ -128,6 +129,8 @@ export default function App() {
       setCurrentView('flights');
     } else if (newParams.category === 'trains') {
       setCurrentView('trains');
+    } else if (newParams.category === 'cabs') {
+      setCurrentView('cabs');
     } else if (newParams.category === 'events') {
       setCurrentView('experiences');
     } else {
@@ -284,6 +287,13 @@ export default function App() {
           <TrainsView
             onNavigate={handleNavigate}
             onBookTrain={handleBookTransit}
+          />
+        )}
+
+        {currentView === 'cabs' && (
+          <CabsView
+            onNavigate={handleNavigate}
+            onBookCab={handleBookTransit}
           />
         )}
 

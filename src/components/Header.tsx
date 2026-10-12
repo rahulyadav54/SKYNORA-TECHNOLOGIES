@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppView } from '../types';
 
 interface HeaderProps {
@@ -20,13 +20,31 @@ export const Header: React.FC<HeaderProps> = ({
   onSignOut,
   onOpenConcierge,
 }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navItems: { label: string; view: AppView; icon: string }[] = [
+    { label: 'Explore', view: 'explore', icon: 'explore' },
+    { label: 'Hotels', view: 'hotels', icon: 'hotel' },
+    { label: 'Buses', view: 'buses', icon: 'directions_bus' },
+    { label: 'Flights', view: 'flights', icon: 'flight' },
+    { label: 'Trains', view: 'trains', icon: 'train' },
+    { label: 'Cabs', view: 'cabs', icon: 'local_taxi' },
+    { label: 'Experiences', view: 'experiences', icon: 'confirmation_number' },
+    { label: 'Help', view: 'help', icon: 'support_agent' },
+  ];
+
+  const handleNavClick = (view: AppView) => {
+    onNavigate(view);
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#ffffff]/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(11,19,43,0.06)] border-b border-[#e2e7ff]/60">
-      <div className="h-20 max-w-7xl mx-auto px-6 flex items-center justify-between gap-4">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#ffffff]/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(11,19,43,0.06)] border-b border-[#e2e7ff]/60">
+      <div className="h-20 max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-3">
         {/* Brand & Logo */}
-        <div className="flex items-center gap-6 flex-shrink-0">
+        <div className="flex items-center gap-4 lg:gap-6 flex-shrink-0">
           <button
-            onClick={() => onNavigate('explore')}
+            onClick={() => handleNavClick('explore')}
             className="flex items-center gap-2 group text-left cursor-pointer focus:outline-none"
           >
             <div className="h-9 w-9 rounded-lg bg-[#131a33] flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform">
@@ -46,81 +64,24 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Desktop Nav Links */}
           <nav className="hidden xl:flex items-center gap-1">
-            <button
-              onClick={() => onNavigate('explore')}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-all font-semibold cursor-pointer ${
-                currentView === 'explore'
-                  ? 'bg-[#e2e7ff] text-[#131b2e]'
-                  : 'text-[#45464d] hover:text-[#131b2e] hover:bg-[#f2f3ff]'
-              }`}
-            >
-              Explore
-            </button>
-            <button
-              onClick={() => onNavigate('hotels')}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-all font-semibold cursor-pointer ${
-                currentView === 'hotels' || currentView === 'hotel-detail'
-                  ? 'bg-[#e2e7ff] text-[#131b2e]'
-                  : 'text-[#45464d] hover:text-[#131b2e] hover:bg-[#f2f3ff]'
-              }`}
-            >
-              Hotels
-            </button>
-            <button
-              onClick={() => onNavigate('buses')}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-all font-semibold cursor-pointer ${
-                currentView === 'buses'
-                  ? 'bg-[#e2e7ff] text-[#131b2e]'
-                  : 'text-[#45464d] hover:text-[#131b2e] hover:bg-[#f2f3ff]'
-              }`}
-            >
-              Buses
-            </button>
-            <button
-              onClick={() => onNavigate('flights')}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-all font-semibold cursor-pointer ${
-                currentView === 'flights'
-                  ? 'bg-[#e2e7ff] text-[#131b2e]'
-                  : 'text-[#45464d] hover:text-[#131b2e] hover:bg-[#f2f3ff]'
-              }`}
-            >
-              Flights
-            </button>
-            <button
-              onClick={() => onNavigate('trains')}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-all font-semibold cursor-pointer ${
-                currentView === 'trains'
-                  ? 'bg-[#e2e7ff] text-[#131b2e]'
-                  : 'text-[#45464d] hover:text-[#131b2e] hover:bg-[#f2f3ff]'
-              }`}
-            >
-              Trains
-            </button>
-            <button
-              onClick={() => onNavigate('experiences')}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-all font-semibold cursor-pointer ${
-                currentView === 'experiences'
-                  ? 'bg-[#e2e7ff] text-[#131b2e]'
-                  : 'text-[#45464d] hover:text-[#131b2e] hover:bg-[#f2f3ff]'
-              }`}
-            >
-              Experiences
-            </button>
-            <button
-              onClick={() => onNavigate('help')}
-              className={`px-3 py-1.5 rounded-lg text-sm transition-all font-semibold cursor-pointer ${
-                currentView === 'help'
-                  ? 'bg-[#e2e7ff] text-[#131b2e]'
-                  : 'text-[#45464d] hover:text-[#131b2e] hover:bg-[#f2f3ff]'
-              }`}
-            >
-              Help
-            </button>
+            {navItems.map((item) => (
+              <button
+                key={item.view}
+                onClick={() => handleNavClick(item.view)}
+                className={`px-2.5 py-1.5 rounded-lg text-sm transition-all font-semibold cursor-pointer ${
+                  currentView === item.view || (item.view === 'hotels' && currentView === 'hotel-detail')
+                    ? 'bg-[#e2e7ff] text-[#131b2e]'
+                    : 'text-[#45464d] hover:text-[#131b2e] hover:bg-[#f2f3ff]'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
           </nav>
         </div>
 
         {/* Right Section: AI Concierge, Currency, B2B Portal switch, User Profile */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           {/* AI Concierge Launcher */}
           {onOpenConcierge && (
             <button
@@ -134,8 +95,8 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* B2B Partner Portal Quick Switch Badge */}
           <button
-            onClick={() => onNavigate(currentView === 'partner-portal' ? 'explore' : 'partner-portal')}
-            className={`hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all border ${
+            onClick={() => handleNavClick(currentView === 'partner-portal' ? 'explore' : 'partner-portal')}
+            className={`hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all border ${
               currentView === 'partner-portal'
                 ? 'bg-[#131a33] text-[#acedff] border-[#131a33] shadow-sm'
                 : 'bg-[#eaedff] text-[#4b41e1] hover:bg-[#dae2fd] border-[#c6c6ce]/40'
@@ -145,18 +106,18 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="material-symbols-outlined text-sm">
               {currentView === 'partner-portal' ? 'person' : 'storefront'}
             </span>
-            <span>{currentView === 'partner-portal' ? 'Traveler Mode' : 'B2B Partner Central'}</span>
+            <span>{currentView === 'partner-portal' ? 'Traveler Mode' : 'B2B Partner'}</span>
           </button>
 
           {/* Currency Pill */}
-          <div className="hidden sm:flex items-center gap-1 bg-[#f2f3ff] px-2.5 py-1 rounded-full text-[#131b2e] text-xs font-bold border border-[#e2e7ff]">
+          <div className="hidden md:flex items-center gap-1 bg-[#f2f3ff] px-2.5 py-1 rounded-full text-[#131b2e] text-xs font-bold border border-[#e2e7ff]">
             <span className="text-[#4b41e1]">₹</span>
             <span>INR</span>
           </div>
 
           {/* Quick Bookings shortcut */}
           <button
-            onClick={() => onNavigate('profile')}
+            onClick={() => handleNavClick('profile')}
             className={`hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               currentView === 'profile'
                 ? 'bg-[#4b41e1] text-white'
@@ -171,7 +132,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-2 pl-1">
             {user ? (
               <button
-                onClick={() => onNavigate('profile')}
+                onClick={() => handleNavClick('profile')}
                 className="relative p-0.5 rounded-full ring-2 ring-[#4b41e1] hover:ring-offset-2 transition-all cursor-pointer"
                 title={`${user.displayName || user.email} (Connected)`}
               >
@@ -195,8 +156,58 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             )}
           </div>
+
+          {/* Mobile Hamburger Toggle Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="xl:hidden p-2 rounded-xl text-[#131b2e] hover:bg-[#f2f3ff] transition-colors cursor-pointer"
+            aria-label="Toggle navigation menu"
+          >
+            <span className="material-symbols-outlined text-2xl">
+              {mobileMenuOpen ? 'close' : 'menu'}
+            </span>
+          </button>
         </div>
       </div>
+
+      {/* Mobile Navigation Drawer / Dropdown */}
+      {mobileMenuOpen && (
+        <div className="xl:hidden bg-white border-b border-[#e2e7ff] px-6 py-4 space-y-3 shadow-xl animate-in slide-in-from-top-2">
+          <div className="grid grid-cols-2 gap-2">
+            {navItems.map((item) => (
+              <button
+                key={item.view}
+                onClick={() => handleNavClick(item.view)}
+                className={`flex items-center gap-2 p-2.5 rounded-xl text-xs font-bold transition-all text-left cursor-pointer ${
+                  currentView === item.view || (item.view === 'hotels' && currentView === 'hotel-detail')
+                    ? 'bg-[#4b41e1] text-white shadow-xs'
+                    : 'bg-[#f2f3ff] text-[#131b2e] hover:bg-[#e2e7ff]'
+                }`}
+              >
+                <span className="material-symbols-outlined text-base">{item.icon}</span>
+                <span>{item.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="pt-2 border-t border-[#f2f3ff] flex items-center justify-between gap-2">
+            <button
+              onClick={() => handleNavClick('profile')}
+              className="flex-1 py-2 px-3 rounded-xl bg-[#e2e7ff] text-[#131b2e] text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-sm">luggage</span>
+              <span>My Trips & Wallet</span>
+            </button>
+            <button
+              onClick={() => handleNavClick('partner-portal')}
+              className="flex-1 py-2 px-3 rounded-xl bg-[#131a33] text-[#acedff] text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <span className="material-symbols-outlined text-sm">storefront</span>
+              <span>B2B Portal</span>
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

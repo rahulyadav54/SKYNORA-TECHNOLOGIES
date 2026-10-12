@@ -568,13 +568,15 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                     Varun Mehra (+91 98112 40019)
                   </div>
                 </div>
-                <button
-                  onClick={() => window.open('https://wa.me/919811240019', '_blank')}
+                <a
+                  href="https://wa.me/919811240019"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-sm">chat</span>
                   <span>Connect on WhatsApp VIP Desk</span>
-                </button>
+                </a>
               </div>
 
               <div className="bg-[#e2e7ff]/40 rounded-3xl p-6 border border-[#c6c6ce]/40">
